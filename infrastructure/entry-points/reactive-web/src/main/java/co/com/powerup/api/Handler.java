@@ -7,6 +7,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 
 import co.com.powerup.model.usuario.User;
 import co.com.powerup.usecase.usuario.UserUseCase;
+import co.com.powerup.usecase.usuario.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 
@@ -17,7 +18,7 @@ public class Handler {
     private  final UserUseCase usuarioUseCase;
 
 
-    public Mono<ServerResponse> listenSaveUser(ServerRequest serverRequest) {
+    public Mono<ServerResponse> listenSaveUser(ServerRequest serverRequest) throws BusinessException {
         return serverRequest.bodyToMono(User.class)
                 .flatMap(usuarioUseCase::saveUser)
                 .flatMap(savedUser -> ServerResponse.ok()

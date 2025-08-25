@@ -1,6 +1,8 @@
 package co.com.powerup.api;
 
 import co.com.powerup.api.config.UserPath;
+import co.com.powerup.usecase.usuario.exception.BusinessException;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.RouterFunction;
@@ -22,7 +24,7 @@ public class RouterRest {
     }
 
     @Bean
-    public RouterFunction<ServerResponse> routerFunction(Handler handler) {
+    public RouterFunction<ServerResponse> routerFunction(Handler handler)  throws BusinessException {
         return route(POST(userPath.getUsers()), userHandler::listenSaveUser)
                 .andRoute(PUT(userPath.getUsers()), userHandler::listenUpdateUser)
                 .andRoute(DELETE(userPath.getUserById()), userHandler::listenDeleteUser)
